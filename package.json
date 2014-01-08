@@ -1,6 +1,6 @@
 {
   "name": "gulp-sweetjs",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Transpile Sweet.js macros",
   "license": "MIT",
   "repository": "sindresorhus/gulp-sweetjs",
