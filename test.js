@@ -15,7 +15,7 @@ it('should compile macro', function (cb) {
 	stream.on('data', function (file) {
 		i++;
 
-		if (/.js$/.test(file.path)) {
+		if (/\.js$/.test(file.path)) {
 			assert(/console\.log/.test(file.contents.toString()));
 			assert.equal(file.relative, 'fixture.js');
 			return;
