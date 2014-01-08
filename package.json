@@ -1,0 +1,40 @@
+{
+  "name": "gulp-sweetjs",
+  "version": "0.0.0",
+  "description": "Transpile Sweet.js macros",
+  "license": "MIT",
+  "repository": "sindresorhus/gulp-sweetjs",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "http://sindresorhus.com"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "index.js"
+  ],
+  "keywords": [
+    "gulpplugin",
+    "sweet.js",
+    "sweet",
+    "macro",
+    "macros",
+    "compile",
+    "transpile"
+  ],
+  "dependencies": {
+    "gulp-util": "~2.2.0",
+    "through": "~2.3.4",
+    "resolve": "~0.6.1",
+    "each-async": "~0.1.1",
+    "sweet.js": "~0.3.2"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  }
+}
