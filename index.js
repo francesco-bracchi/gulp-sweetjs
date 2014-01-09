@@ -56,7 +56,7 @@ module.exports = function (options) {
 
 		if (macros === undefined) {
 			macros = [];
-			eachAync(options.modules, function (el, i, next) {
+			eachAync(options.modules || [], function (el, i, next) {
 				resolve(el, {basedir: process.cwd()}, function (err, res) {
 					if (err) {
 						return self.emit('error', new gutil.PluginError('gulp-sweetjs', err));
