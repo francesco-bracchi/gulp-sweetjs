@@ -6,6 +6,7 @@ var through = require('through');
 var resolve = require('resolve');
 var eachAync = require('each-async');
 var sweetjs = require('sweet.js');
+var baseDir = process.cwd();
 
 function compile(file, options) {
 	var result;
@@ -13,7 +14,6 @@ function compile(file, options) {
 	try {
 		result = sweetjs.compile(file.contents.toString(), options);
 	} catch (err) {
-		console.log(err)
 		return this.emit('error', new gutil.PluginError('gulp-sweetjs', err));
 	}
 
@@ -39,8 +39,6 @@ function compile(file, options) {
 module.exports = function (options) {
 	options = options || {};
 
-	var macros;
-
 	return through(function (file) {
 		var self = this;
 
@@ -54,33 +52,12 @@ module.exports = function (options) {
 
 		options.filename = path.basename(file.path);
 
-		if (macros === undefined) {
-			macros = [];
-			eachAync(options.modules || [], function (el, i, next) {
-				resolve(el, {basedir: process.cwd()}, function (err, res) {
-					if (err) {
-						return self.emit('error', new gutil.PluginError('gulp-sweetjs', err));
-					}
+		if (options.modules instanceof Array) {
+      options.modules = options.modules.map(function (mod) {
+        var module = sweetjs.loadNodeModule(baseDir, mod);
 
-					fs.readFile(res, 'utf8', function (err, data) {
-						if (err) {
-							return self.emit('error', new gutil.PluginError('gulp-sweetjs', err));
-						}
-
-						macros.push(data);
-						next();
-					});
-				});
-			}, function (err) {
-				if (err) {
-					return self.emit('error', new gutil.PluginError('gulp-sweetjs', err));
-				}
-
-				options.macros = macros.join('\n');
-				compile.call(self, file, options);
-			});
-
-			return;
+        return module; 
+      });
 		}
 
 		compile.call(this, file, options);
