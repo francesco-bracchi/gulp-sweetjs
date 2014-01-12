@@ -3,8 +3,6 @@ var fs = require('fs');
 var path = require('path');
 var gutil = require('gulp-util');
 var through = require('through');
-var resolve = require('resolve');
-var eachAync = require('each-async');
 var sweetjs = require('sweet.js');
 var baseDir = process.cwd();
 
@@ -52,12 +50,10 @@ module.exports = function (options) {
 
 		options.filename = path.basename(file.path);
 
-		if (options.modules instanceof Array) {
-      options.modules = options.modules.map(function (mod) {
-        var module = sweetjs.loadNodeModule(baseDir, mod);
-
-        return module; 
-      });
+		if (Array.isArray(options.modules)) {
+			options.modules = options.modules.map(function (module) {
+				return sweetjs.loadNodeModule(baseDir, module);
+			});
 		}
 
 		compile.call(this, file, options);
