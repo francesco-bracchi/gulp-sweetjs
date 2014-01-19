@@ -15,14 +15,14 @@ it('should compile macro', function (cb) {
 	stream.on('data', function (file) {
 		i++;
 
-		if (/\.js$/.test(file.path)) {
-			assert(/console\.log/.test(file.contents.toString()));
-			assert.equal(file.relative, 'fixture.js');
+		if (/\.map$/.test(file.path)) {
+			assert(/\"version":3/.test(file.contents.toString()));
+			assert.equal(file.relative, 'fixture.map');
 			return;
 		}
 
-		assert(/\"version":3/.test(file.contents.toString()));
-		assert.equal(file.relative, 'fixture.map');
+		assert(/console\.log/.test(file.contents.toString()));
+		assert.equal(file.relative, 'fixture.js');
 
 		if (i === 2) {
 			cb();
