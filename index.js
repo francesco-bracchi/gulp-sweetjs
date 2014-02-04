@@ -7,6 +7,12 @@ var baseDir = process.cwd();
 
 module.exports = function (options) {
 	options = options || {};
+  
+        if (Array.isArray(options.modules)) {
+                options.modules = options.modules.map(function (module) {
+                        return sweetjs.loadNodeModule(baseDir, module);
+                });
+        }
 
 	return through.obj(function (file, enc, cb) {
 		if (file.isNull()) {
@@ -20,12 +26,6 @@ module.exports = function (options) {
 		}
 
 		options.filename = path.basename(file.path);
-
-		if (Array.isArray(options.modules)) {
-			options.modules = options.modules.map(function (module) {
-				return sweetjs.loadNodeModule(baseDir, module);
-			});
-		}
 
 		try {
 			var result = sweetjs.compile(file.contents.toString(), options);
